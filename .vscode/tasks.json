@@ -23,7 +23,13 @@
             "taskName": "run",
             "args": [
                 "-q",
-                "run"
+                "bootRun"
+            ]
+        },
+        {
+            "taskName": "Generates Eclipse Project",
+            "args": [
+                "eclipse"
             ]
         }
     ]

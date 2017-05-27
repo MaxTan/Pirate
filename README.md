@@ -1,8 +1,8 @@
-## java-gradle-console-example
+## Pirate ---  An awesome Project!
 
 ---
 
 ## Usage
 
     gradle build
-    gradle run
+    gradle bootRun
