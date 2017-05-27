@@ -5,6 +5,21 @@
  * For more details take a look at the Java Quickstart chapter in the Gradle
  * user guide available at https://docs.gradle.org/3.4.1/userguide/tutorial_java_projects.html
  */
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.2.RELEASE")
+    }
+}
+
+// jar {
+//     baseName = 'Pirate'
+//     version = '0.0.1'
+// }
+
  
  group 'xyz.xyzmax'
  version '1.0-SNAPSHOT'
@@ -13,7 +28,11 @@
 
 
 apply plugin: 'java'
-apply plugin: 'application'
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+// apply plugin: 'maven'
+// apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -33,17 +52,22 @@ dependencies {
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
     // testCompile 'junit:junit:4.12'
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-mainClassName = "xyz.xyzmax.Pirate.App"
 
-sourceSets {
-    main {
-        java {
-            srcDir 'src/main/java'
-        }
-        resources {
-            srcDir 'src/main/resources'
-        }
-    }
-}
+// ApplicationPlugin Config
+
+// mainClassName = "xyz.xyzmax.Pirate.App"
+
+// sourceSets {
+//     main {
+//         java {
+//             srcDir 'src/main/java'
+//         }
+//         resources {
+//             srcDir 'src/main/resources'
+//         }
+//     }
+// }
