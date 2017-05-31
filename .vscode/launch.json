@@ -13,7 +13,7 @@
             ],
             "options": [
                 "-classpath",
-                "${workspaceRoot}/build/classes/main"
+                "${workspaceRoot}/bin"
             ],
             "jdkPath": "${env:JAVA_HOME}/bin",
             // "preLaunchTask": "build",
