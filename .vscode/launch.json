@@ -6,17 +6,17 @@
             "type": "java",
             "request": "launch",
             "stopOnEntry": true,
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/bin",
             "startupClass": "xyz.xyzmax.Pirate.App",
             "sourcePath": [
                 "${workspaceRoot}/src/main/java"
             ],
             "options": [
                 "-classpath",
-                "${workspaceRoot}/bin"
+                "${workspaceRoot}/build/classes/main"
             ],
             "jdkPath": "${env:JAVA_HOME}/bin",
-            // "preLaunchTask": "build",
+            // "preLaunchTask": "build"
             "externalConsole": true
         }
     ]
