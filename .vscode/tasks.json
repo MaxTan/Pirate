@@ -6,7 +6,7 @@
     "isShellCommand": true,
     "showOutput": "always",
     "suppressTaskName": true,
-    "tasks": [
+    "taks": [
         {
             "taskName": "build",
             "args": [

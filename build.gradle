@@ -15,10 +15,6 @@ buildscript {
     }
 }
 
-// jar {
-//     baseName = 'Pirate'
-//     version = '0.0.1'
-// }
 
  
  group 'xyz.xyzmax'
@@ -33,6 +29,12 @@ apply plugin: 'eclipse'
 // apply plugin: 'maven'
 // apply plugin: 'application'
 apply plugin: 'org.springframework.boot'
+
+
+jar {
+    baseName = 'Pirate'
+    version = '0.0.1'
+}
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -57,7 +59,7 @@ dependencies {
 }
 
 
-// ApplicationPlugin Config
+//# ApplicationPlugin Config
 
 // mainClassName = "xyz.xyzmax.Pirate.App"
 

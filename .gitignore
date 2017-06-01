@@ -9,3 +9,9 @@ bin/
 out/
 *.ipr
 *.iws
+
+
+node_modules/
+typings/
+package-lock.json
+src/main/resources/static/
