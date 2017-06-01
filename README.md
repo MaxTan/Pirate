@@ -1,8 +1,8 @@
-## Pirate ---  An awesome Project!
+## Pirate 
 
 ---
 
-## Usage
+## Install 
 
-    gradle build
-    gradle bootRun
+    npm install
+    ./gradlew bootRun

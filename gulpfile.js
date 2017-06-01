@@ -7,7 +7,8 @@ const ts = require('gulp-typescript');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 const htmlmin = require('gulp-htmlmin');
-
+const sass = require('gulp-sass');
+const autoprefixer = require('gulp-autoprefixer');
 
 const staticDir = 'src/main/resources/static/';
 const webAppDir = 'src/main/client/';
@@ -53,4 +54,23 @@ gulp.task('html-replace', () => {
         .pipe(gulp.dest(staticDir))
 });
 
-gulp.task('build', ['typescript-compile', 'library', 'html-replace']);
+gulp.task('css-replace', () => {
+    return gulp.src(webAppDir + '**/*.scss')
+        .pipe(newer({ dest: staticDir, ext: '.css' }))
+        .pipe(sourcemaps.init())
+        .pipe(sass({ outputStyle: 'compressed' }))
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
+        .pipe(sourcemaps.write('/'))
+        .pipe(gulp.dest(staticDir))
+});
+
+gulp.task('watch', function () {
+    gulp.watch(webAppDir + '**/*.ts', ['typescript-compile']);
+    gulp.watch(webAppDir + '**/*.html', ['html-replace']);
+    gulp.watch(webAppDir + '**/*.scss', ['css-replace']);
+});
+
+gulp.task('build', ['typescript-compile', 'library', 'html-replace', 'css-replace']);
