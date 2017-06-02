@@ -7,4 +7,8 @@
 ## Install 
 
     npm install
-    ./gradlew bootRun
+    gradle bootRun
+
+## Development mode
+
+    gradle gulp_dev

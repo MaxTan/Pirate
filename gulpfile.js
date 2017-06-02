@@ -11,6 +11,7 @@ const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 
 const staticDir = 'src/main/resources/static/';
+const debugDir = 'build/resources/main/static/'
 const webAppDir = 'src/main/client/';
 
 const lib = [
@@ -34,27 +35,28 @@ gulp.task('clean', () => {
 });
 
 gulp.task('typescript-compile', () => {
-    let tsProject = ts.createProject('tsconfig.json');
-    return gulp.src(['typings/index.d.ts', webAppDir + '**/*.ts'])
-        .pipe(newer({ dest: staticDir, ext: '.js' }))
-        .pipe(sourcemaps.init())
-        .pipe(tsProject())
-        .pipe(uglify())
-        .pipe(sourcemaps.write('/'))
-        .pipe(gulp.dest(staticDir))
+    return typescriptComile(staticDir);
 });
 
-
 gulp.task('html-replace', () => {
-    return gulp.src(webAppDir + '**/*.html')
-        .pipe(newer(staticDir))
-        .pipe(sourcemaps.init())
-        .pipe(htmlmin({ collapseWhitespace: true, caseSensitive: true }))
-        .pipe(sourcemaps.write('/'))
-        .pipe(gulp.dest(staticDir))
+    return htmlReplace(staticDir);
 });
 
 gulp.task('css-replace', () => {
+    return cssReplace(staticDir);
+});
+
+gulp.task('build', ['typescript-compile', 'library', 'html-replace', 'css-replace']);
+
+gulp.task('watch', function () {
+    gulp.watch(webAppDir + '**/*.ts', event => typescriptComile(debugDir));
+    gulp.watch(webAppDir + '**/*.html', event => htmlReplace(debugDir));
+    gulp.watch(webAppDir + '**/*.scss', event => cssReplace(debugDir));
+});
+
+gulp.task('dev', ['build', 'watch']);
+
+function cssReplace(dir) {
     return gulp.src(webAppDir + '**/*.scss')
         .pipe(newer({ dest: staticDir, ext: '.css' }))
         .pipe(sourcemaps.init())
@@ -64,13 +66,25 @@ gulp.task('css-replace', () => {
             cascade: false
         }))
         .pipe(sourcemaps.write('/'))
-        .pipe(gulp.dest(staticDir))
-});
+        .pipe(gulp.dest(dir))
+}
 
-gulp.task('watch', function () {
-    gulp.watch(webAppDir + '**/*.ts', ['typescript-compile']);
-    gulp.watch(webAppDir + '**/*.html', ['html-replace']);
-    gulp.watch(webAppDir + '**/*.scss', ['css-replace']);
-});
+function htmlReplace(dir) {
+    return gulp.src(webAppDir + '**/*.html')
+        .pipe(newer(staticDir))
+        .pipe(sourcemaps.init())
+        .pipe(htmlmin({ collapseWhitespace: true, caseSensitive: true }))
+        .pipe(sourcemaps.write('/'))
+        .pipe(gulp.dest(dir))
+}
 
-gulp.task('build', ['typescript-compile', 'library', 'html-replace', 'css-replace']);
+function typescriptComile(dir) {
+    let tsProject = ts.createProject('tsconfig.json');
+    return gulp.src(['typings/index.d.ts', webAppDir + '**/*.ts'])
+        .pipe(newer({ dest: staticDir, ext: '.js' }))
+        .pipe(sourcemaps.init())
+        .pipe(tsProject())
+        .pipe(uglify())
+        .pipe(sourcemaps.write('/'))
+        .pipe(gulp.dest(dir))
+}
