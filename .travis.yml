@@ -7,7 +7,7 @@ node_js:
   - "7.8.0"
 
 before_install:
-  - npm install -g npm@^2
+  - npm install -g npm@^5
   - npm install -g gulp
   - npm install -g typings
   - npm install
