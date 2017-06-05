@@ -1,17 +1,17 @@
 language: java
 
 jdk:
-- oraclejdk8
+  - oraclejdk8
 
 node_js:
-- "7.8.0"
+  - "7.8.0"
 
 before_install:
-- npm install -g npm@^2
-- npm install -g gulp
-- npm install -g typings
-- npm install
-- chmod +x gradlew
+  - npm install -g npm@^2
+  - npm install -g gulp
+  - npm install -g typings
+  - npm install
+  - chmod +x gradlew
 
 deploy:
   provider: heroku
