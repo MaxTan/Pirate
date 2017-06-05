@@ -1,10 +1,10 @@
 language: java
 
 jdk:
-  - oraclejdk8
+  - oraclejdk8  
 
 before_install:
-  - npm install -g npm@^5
+  - npm install -g npm@^3
   - npm install -g gulp
   - npm install -g typings
   - npm install
