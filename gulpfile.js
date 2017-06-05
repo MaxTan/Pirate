@@ -10,9 +10,9 @@ const htmlmin = require('gulp-htmlmin');
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 
-const staticDir = 'src/main/resources/static/';
-const debugDir = 'build/resources/main/static/'
-const webAppDir = 'src/main/client/';
+const staticDir = './src/main/resources/static/';
+const debugDir = './build/resources/main/static/'
+const webAppDir = './src/main/client/';
 
 const lib = [
     'core-js/client/shim.min.js',
@@ -25,7 +25,7 @@ const lib = [
 ];
 
 gulp.task('library', () => {
-    return gulp.src(lib, { cwd: 'node_modules/**' })
+    return gulp.src(lib, { cwd: './node_modules/**' })
         .pipe(newer(staticDir + 'lib/'))
         .pipe(gulp.dest(staticDir + 'lib/'));
 });
