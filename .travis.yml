@@ -3,7 +3,7 @@ jdk:
 - oraclejdk8
 before_install:
 - npm cache clean
-- npm install
+- npm install --registry http://registry.npmjs.org/
 - chmod +x gradlew
 
 deploy:
