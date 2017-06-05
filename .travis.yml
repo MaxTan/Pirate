@@ -4,7 +4,6 @@ jdk:
 before_install:
 - npm install -g npm
 - rm -rf /home/travis/.npm/
-- npm cache clean
 - npm install
 - chmod +x gradlew
 
