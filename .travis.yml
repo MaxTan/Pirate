@@ -6,6 +6,7 @@ jdk:
 before_install:
   - chmod +x ./gradlew
   - ./gradlew npmInstall  
+  - ls -ln src/main/resources/static
 
 deploy:
   provider: heroku
