@@ -39,6 +39,7 @@ dependencies {
 node {
     version = '7.8.0'
     npmVersion = '5.0.0'
+    download = true
 }
 
 gulp {
