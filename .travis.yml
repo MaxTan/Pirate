@@ -4,9 +4,9 @@ jdk:
   - oraclejdk8  
   
 before_install:
-  - chmod +x gradlew
-  - gradlew npmInstall
-  - gradlew npm_install
+  - chmod +x ./gradlew
+  - ./gradlew npmInstall
+  - ./gradlew npm_install
 
 deploy:
   provider: heroku
