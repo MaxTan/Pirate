@@ -2,12 +2,7 @@ language: java
 jdk:
 - oraclejdk8
 before_install:
-- npm install -g npm
-- rm -fr /home/travis/.npm/
-- npm install gulp -g
-- npm install typings -g
 - npm install
-- gulp build
 - chmod +x gradlew
 
 deploy:
