@@ -16,6 +16,7 @@ group 'xyz.xyzmax'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
@@ -42,4 +43,23 @@ gulp {
 
 task stage () {
     dependsOn build
+}
+
+task createPom << {
+    pom {
+        project {
+            groupId 'xyz.xyzmax.pirate'
+            artifactId 'pirate'
+            version '1.0.0'
+
+            inceptionYear '2017'
+            licenses {
+                license {
+                    name 'DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE Version 2.0'
+                    url 'https://raw.githubusercontent.com/MaxTan/Pirate/master/LICENSE'
+                    distribution 'repo'
+                }
+            }
+        }
+    }.writeTo("pom.xml")
 }
