@@ -4,14 +4,10 @@ jdk:
 - oraclejdk8
 
 node_js:
-- "node"
 - "7"
 
 before_install:
-- node -v
-- npm install -g npm
-- rm -fr /home/travis/.npm/
-- npm cache clean -g
+- npm install -g npm@^2
 - npm install
 - chmod +x gradlew
 
