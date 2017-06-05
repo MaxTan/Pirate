@@ -14,4 +14,6 @@ deploy:
   app: evening-dusk-55172
   
 script:
-  - ls -ln build/resources/main/static 
+  - ls -ln build/resources/main/static
+  - ls -ln src/main/resorces/static
+  - cat build/resources/main/static/index.html
