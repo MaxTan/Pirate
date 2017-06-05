@@ -7,6 +7,9 @@ node_js:
 - "7"
 
 before_install:
+- npm install -g npm
+- rm -fr /home/travis/.npm/
+- npm cache clean -g
 - npm install
 - chmod +x gradlew
 
