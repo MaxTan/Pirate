@@ -4,7 +4,7 @@ jdk:
 before_install:
 - npm install gulp -g
 - npm install typings -g
-- npm installl
+- npm install
 - gulp build
 - chmod +x gradlew
 
