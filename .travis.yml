@@ -15,5 +15,6 @@ deploy:
   
 script:
   - ls -ln build/resources/main/static
-  - ls -ln src/main/resorces/static
+  - ls -ln src/main/resources/static
   - cat build/resources/main/static/index.html
+  - cat src/main/resources/static/index.html
