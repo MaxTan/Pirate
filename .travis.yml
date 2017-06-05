@@ -8,6 +8,8 @@ node_js:
 
 before_install:
 - npm install -g npm@^2
+- npm install -g gulp
+- npm install -g typings
 - npm install
 - chmod +x gradlew
 
