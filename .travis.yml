@@ -2,8 +2,10 @@ language: java
 jdk:
 - oraclejdk8
 before_install:
+- npm install -g npm
+- rm -rf /home/travis/.npm/
 - npm cache clean
-- npm install --registry http://registry.npmjs.org/
+- npm install
 - chmod +x gradlew
 
 deploy:
