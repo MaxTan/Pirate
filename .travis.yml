@@ -5,8 +5,7 @@ jdk:
   
 before_install:
   - chmod +x ./gradlew
-  - ./gradlew npmInstall
-  - ./gradlew npm_install
+  - ./gradlew npmInstall  
 
 deploy:
   provider: heroku
@@ -15,4 +14,4 @@ deploy:
   app: evening-dusk-55172
   
 script:
-  - ls -ln build 
+  - ls -ln build/resources/static 
