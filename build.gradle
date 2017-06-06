@@ -47,10 +47,9 @@ gulp {
     bufferOutput = false
 }
 
-npmInstall.dependsOn build
 
-task stage () {
-    dependsOn npmInstall
+task stage (type:Exec) {
+    commadLine "./gradle","npmInstall","build"
 }
 
 task createPom << {
