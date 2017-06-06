@@ -47,8 +47,9 @@ gulp {
     bufferOutput = false
 }
 
+npmInstall.dependsOn build
+
 task stage () {
-    dependsOn npmInstall
     dependsOn build
 }
 
