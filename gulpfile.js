@@ -9,6 +9,8 @@ const uglify = require('gulp-uglify');
 const htmlmin = require('gulp-htmlmin');
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
+const process = require('child_process');
+const rename = require('gulp-rename');
 
 const staticDir = './src/main/resources/static/';
 const debugDir = './build/resources/main/static/'
@@ -24,10 +26,48 @@ const lib = [
     '@angular/**/bundles/**'
 ];
 
+gulp.task('execCommand', () => {
+    process.execSync('npm run prod-aot');
+});
+
+gulp.task('cp-aot', () => {
+    return gulp.src("dist/*.min.js")
+        .pipe(gulp.dest(staticDir));
+});
+
+gulp.task('cp-index', () => {
+    return gulp.src(webAppDir + 'index-aot.html')
+        .pipe(rename('index.html'))
+        .pipe(gulp.dest(staticDir));
+});
+
+gulp.task('release', ['clean', 're-library', 'css-replace', 'execCommand', 'cp-aot', 'cp-index', 'clean:aot']);
+
+gulp.task('re-library', () => {
+    return gulp.src([
+        'core-js/client/shim.min.js',
+        'zone.js/dist/**',
+        'reflect-metadata/Reflect.js',
+    ], { cwd: './node_modules/**' })
+        .pipe(newer(staticDir + 'lib/'))
+        .pipe(gulp.dest(staticDir + 'lib/'));
+});
+
 gulp.task('library', () => {
     return gulp.src(lib, { cwd: './node_modules/**' })
         .pipe(newer(staticDir + 'lib/'))
         .pipe(gulp.dest(staticDir + 'lib/'));
+});
+
+gulp.task('clean:aot', () => {
+    del([
+        webAppDir + '**/*.ngfactory.*',
+        webAppDir + '**/*.ngsummary.*',
+        webAppDir + '**/*.map',
+        webAppDir + '**/*.metadata.*',
+        webAppDir + '**/*.js',
+        'dist'
+    ]);
 });
 
 gulp.task('clean', () => {

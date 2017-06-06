@@ -9,6 +9,7 @@ bin/
 out/
 *.ipr
 *.iws
+dist/
 
 
 node_modules/
