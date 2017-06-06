@@ -48,6 +48,7 @@ gulp {
 }
 
 task stage () {
+    dependsOn npmInstll
     dependsOn build
 }
 
