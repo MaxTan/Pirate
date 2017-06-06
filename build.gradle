@@ -49,7 +49,7 @@ gulp {
 
 
 task stage (type:Exec) {
-    commadLine "./gradle","npmInstall","build"
+    commandLine "./gradlew","npmInstall","build"
 }
 
 task createPom << {
