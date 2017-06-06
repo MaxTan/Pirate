@@ -50,7 +50,7 @@ gulp {
 npmInstall.dependsOn build
 
 task stage () {
-    dependsOn build
+    dependsOn npmInstall
 }
 
 task createPom << {
