@@ -25,7 +25,8 @@
             "./node_modules/@types",
             "./node_modules"
         ],
-        "types": []
+        "types": [
+        ]
     },
     "files": [
         "src/main/client/app/app.module.ts",

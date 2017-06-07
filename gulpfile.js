@@ -29,7 +29,9 @@ const lib = [
     '@angular/**/bundles/**'
 ];
 
-gulp.task('execCommand', sequence('ngc', 'tsc', 'rollup', 'es5'));
+gulp.task('clean:all', ['clean', 'clean:aot']);
+
+gulp.task('build:aot', sequence('ngc', 'tsc', 'rollup', 'es5'));
 
 gulp.task('ngc', () => process.execSync('npm run ngc'));
 
@@ -37,7 +39,7 @@ gulp.task('tsc', () => {
     let proj = ts.createProject('tsconfig.json');
     return gulp.src(webAppDir + '**/*.ts')
         .pipe(proj())
-        .pipe(gulp.dest(webAppDir))
+        .pipe(gulp.dest(webAppDir));
 });
 
 gulp.task('rollup', () => {
@@ -64,7 +66,7 @@ gulp.task('cp-index', () => {
         .pipe(gulp.dest(staticDir));
 });
 
-gulp.task('release', sequence(['re-library', 'css-replace', 'cp-index'], 'execCommand', 'clean:aot'));
+gulp.task('release', sequence(['re-library', 'css-replace', 'cp-index'], 'build:aot', 'clean:aot'));
 
 gulp.task('re-library', () => {
     return gulp.src([
@@ -72,7 +74,6 @@ gulp.task('re-library', () => {
         'zone.js/dist/**',
         'reflect-metadata/Reflect.js',
     ], { cwd: './node_modules/**' })
-        .pipe(newer(staticDir + 'lib/'))
         .pipe(gulp.dest(staticDir + 'lib/'));
 });
 
