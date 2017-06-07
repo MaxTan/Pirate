@@ -11,6 +11,9 @@ const autoprefixer = require('gulp-autoprefixer');
 const process = require('child_process');
 const rename = require('gulp-rename');
 const sequence = require('gulp-sequence');
+const rollup = require('rollup-stream');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
 
 const staticDir = './src/main/resources/static/';
 const debugDir = './build/resources/main/static/'
@@ -26,12 +29,32 @@ const lib = [
     '@angular/**/bundles/**'
 ];
 
-gulp.task('execCommand', () => {
-    process.execSync('npm run prod-aot');
+gulp.task('execCommand', sequence('ngc', 'tsc', 'rollup', 'es5'));
+
+gulp.task('ngc', () => process.execSync('npm run ngc'));
+
+gulp.task('tsc', () => {
+    let proj = ts.createProject('tsconfig.json');
+    return gulp.src(webAppDir + '**/*.ts')
+        .pipe(proj())
+        .pipe(gulp.dest(webAppDir))
 });
 
-gulp.task('cp-aot', () => {
-    return gulp.src("dist/*.min.js")
+gulp.task('rollup', () => {
+    return rollup('rollup.config.js')
+        .pipe(source('app.js'))
+        .pipe(gulp.dest('dist'));
+});
+
+gulp.task('es5', () => {
+    return gulp.src('dist/app.js')
+        .pipe(ts({
+            outFile: 'bundle-aot.js',
+            target: 'es5',
+            allowJs: true
+        }))
+        .pipe(uglify())
+        .pipe(rename('bundle-aot.min.js'))
         .pipe(gulp.dest(staticDir));
 });
 
@@ -41,7 +64,7 @@ gulp.task('cp-index', () => {
         .pipe(gulp.dest(staticDir));
 });
 
-gulp.task('release', sequence(['re-library', 'css-replace', 'cp-index'], 'execCommand', 'cp-aot', 'clean:aot'));
+gulp.task('release', sequence(['re-library', 'css-replace', 'cp-index'], 'execCommand', 'clean:aot'));
 
 gulp.task('re-library', () => {
     return gulp.src([
@@ -117,12 +140,12 @@ function htmlReplace(dir) {
 }
 
 function typescriptComile(dir) {
-    let tsProject = ts.createProject('tsconfig.json');
+    let tsProject = ts.createProject('tsconfig.dev.json');
     return gulp.src(webAppDir + '**/*.ts')
         .pipe(newer({ dest: staticDir, ext: '.js' }))
         .pipe(sourcemaps.init())
         .pipe(tsProject())
         .pipe(uglify())
         .pipe(sourcemaps.write('/'))
-        .pipe(gulp.dest(dir))
+        .pipe(gulp.dest(dir));
 }

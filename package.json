@@ -5,10 +5,6 @@
   "scripts": {
     "ngc": "ngc",
     "tsc": "tsc",
-    "rollup": "rollup -f iife -c rollup.config.js -o dist/bundle-aot-es2015.js",
-    "es5": "tsc --target es5 --allowJs dist/bundle-aot-es2015.js -out dist/bundle-aot.js",
-    "minify-aot": "uglifyjs dist/bundle-aot.js --screw-ie8 --compress --mangle --output dist/bundle-aot.min.js",
-    "prod-aot": "npm run ngc -- -p tsconfig-es2015.json && npm run tsc -- -p tsconfig-es2015.json && npm run rollup && npm run es5 && npm run minify-aot",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Max",
@@ -47,6 +43,9 @@
     "rollup": "^0.42.0",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
-    "typescript": "^2.3.4"
+    "rollup-stream": "^1.19.0",
+    "typescript": "^2.3.4",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
