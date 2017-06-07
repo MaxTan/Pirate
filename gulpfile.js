@@ -6,7 +6,6 @@ const newer = require('gulp-newer');
 const ts = require('gulp-typescript');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
-const htmlmin = require('gulp-htmlmin');
 const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const process = require('child_process');
@@ -113,8 +112,6 @@ function htmlReplace(dir) {
     return gulp.src(webAppDir + '**/*.html')
         .pipe(newer(staticDir))
         .pipe(sourcemaps.init())
-        .pipe(htmlmin({ collapseWhitespace: true, caseSensitive: true }))
-        .pipe(sourcemaps.write('/'))
         .pipe(gulp.dest(dir))
 }
 
