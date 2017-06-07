@@ -10,6 +10,7 @@ const sass = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const process = require('child_process');
 const rename = require('gulp-rename');
+const sequence = require('gulp-sequence');
 
 const staticDir = './src/main/resources/static/';
 const debugDir = './build/resources/main/static/'
@@ -40,7 +41,7 @@ gulp.task('cp-index', () => {
         .pipe(gulp.dest(staticDir));
 });
 
-gulp.task('release', ['clean', 're-library', 'css-replace', 'execCommand', 'cp-aot', 'cp-index', 'clean:aot']);
+gulp.task('release', sequence(['re-library', 'css-replace', 'cp-index'], 'execCommand', 'cp-aot', 'clean:aot'));
 
 gulp.task('re-library', () => {
     return gulp.src([
