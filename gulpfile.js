@@ -120,7 +120,7 @@ function htmlReplace(dir) {
 
 function typescriptComile(dir) {
     let tsProject = ts.createProject('tsconfig.json');
-    return gulp.src(['typings/index.d.ts', webAppDir + '**/*.ts'])
+    return gulp.src(webAppDir + '**/*.ts')
         .pipe(newer({ dest: staticDir, ext: '.js' }))
         .pipe(sourcemaps.init())
         .pipe(tsProject())
