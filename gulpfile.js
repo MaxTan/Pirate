@@ -31,30 +31,12 @@ const lib = [
 
 gulp.task('clean:all', ['clean', 'clean:aot']);
 
-gulp.task('build:aot', sequence('ngc', 'tsc', 'rollup', 'es5'));
-
 gulp.task('ngc', () => process.execSync('npm run ngc'));
-
-gulp.task('tsc', () => {
-    let proj = ts.createProject('tsconfig.json');
-    return gulp.src(webAppDir + '**/*.ts')
-        .pipe(proj())
-        .pipe(gulp.dest(webAppDir));
-});
 
 gulp.task('rollup', () => {
     return rollup('rollup.config.js')
         .pipe(source('app.js'))
-        .pipe(gulp.dest('dist'));
-});
-
-gulp.task('es5', () => {
-    return gulp.src('dist/app.js')
-        .pipe(ts({
-            outFile: 'bundle-aot.js',
-            target: 'es5',
-            allowJs: true
-        }))
+        .pipe(buffer())
         .pipe(uglify())
         .pipe(rename('bundle-aot.min.js'))
         .pipe(gulp.dest(staticDir));
@@ -66,7 +48,7 @@ gulp.task('cp-index', () => {
         .pipe(gulp.dest(staticDir));
 });
 
-gulp.task('release', sequence(['re-library', 'css-replace', 'cp-index'], 'build:aot', 'clean:aot'));
+gulp.task('release', sequence(['re-library', 'css-replace', 'cp-index'], 'ngc', 'rollup', 'clean:aot'));
 
 gulp.task('re-library', () => {
     return gulp.src([
@@ -113,9 +95,18 @@ gulp.task('css-replace', () => {
 gulp.task('build', ['typescript-compile', 'library', 'html-replace', 'css-replace']);
 
 gulp.task('watch', function () {
-    gulp.watch(webAppDir + '**/*.ts', event => typescriptComile(debugDir));
-    gulp.watch(webAppDir + '**/*.html', event => htmlReplace(debugDir));
-    gulp.watch(webAppDir + '**/*.scss', event => cssReplace(debugDir));
+    gulp.watch(webAppDir + '**/*.ts', event => {
+        typescriptComile(debugDir);
+        changeLog(event);
+    });
+    gulp.watch(webAppDir + '**/*.html', event => {
+        htmlReplace(debugDir)
+        changeLog(event);
+    });
+    gulp.watch(webAppDir + '**/*.scss', event => {
+        cssReplace(debugDir)
+        changeLog(event);
+    });
 });
 
 gulp.task('dev', ['build', 'watch']);
@@ -149,4 +140,8 @@ function typescriptComile(dir) {
         .pipe(uglify())
         .pipe(sourcemaps.write('/'))
         .pipe(gulp.dest(dir));
+}
+
+function changeLog(event) {
+    console.log('File ' + event.path + ' was ' + event.type + ', running tasks....');
 }
