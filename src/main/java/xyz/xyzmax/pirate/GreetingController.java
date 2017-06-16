@@ -1,6 +1,6 @@
-package xyz.xyzmax.Pirate;
+package xyz.xyzmax.pirate;
 
-import xyz.xyzmax.Pirate.Greeting;
+import xyz.xyzmax.pirate.Greeting;
 
 import java.util.concurrent.atomic.AtomicLong;
 

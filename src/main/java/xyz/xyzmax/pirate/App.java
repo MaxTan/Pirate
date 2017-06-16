@@ -1,4 +1,4 @@
-package xyz.xyzmax.Pirate;
+package xyz.xyzmax.pirate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

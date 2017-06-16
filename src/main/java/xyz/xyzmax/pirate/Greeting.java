@@ -1,4 +1,4 @@
-package xyz.xyzmax.Pirate;
+package xyz.xyzmax.pirate;
 
 /**
  * reeting
